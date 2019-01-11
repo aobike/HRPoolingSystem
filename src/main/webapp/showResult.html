@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="other/node_modules/bootstrap-table/dist/bootstrap-table.css">
+    <script type="text/javascript" src="other/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootstrap-table/dist/bootstrap-table.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script>
+        $(function () {
+            findPostInfo();
+        });
+        function findPostInfo(){
+            var name=sessionStorage.getItem("name");
+            var postid=sessionStorage.getItem("postid");
+            $("#tb").bootstrapTable({
+                url:"findPostInfo.do?name="+name+"&postid="+postid,
+                columns:[
+                    {title:"雇员编号",
+                        align:"center",
+                        field:"id"
+                    },
+                    {title:"雇员职位",
+                        field:"post_name"
+                    },
+                    {title:"雇员姓名",
+                        field:"emp_name"
+                    },
+                    {title:"雇员性别",
+                        field:"emp_sex"
+                    },
+                    {title:"雇员年龄",
+                        field:"emp_age"
+                    },
+                    {title:"雇员部门",
+                        field:"emp_depart"
+                    },
+                    {title:"员工工龄",
+                        field:"emp_year"
+                    }
+                ]
+            });
+            $.ajax({
+                url:"findPostInfo.do",
+                method:"get",
+                data:{name:name,
+                    postid:postid
+                },
+                success:function (data) {
+
+                },
+                error:function () {
+
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <table id="tb">
+    </table>
+</div>
+</body>
+</html>

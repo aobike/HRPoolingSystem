@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="other/node_modules/bootstrap-table/dist/bootstrap-table.css">
+    <script type="text/javascript" src="other/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootstrap-table/dist/bootstrap-table.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script>
+        function redirectShowResult(){
+            sessionStorage.setItem("name",$("#name").val());
+            sessionStorage.setItem("postid",$("#post").val());
+            window.location.href="showResult.html";
+        }
+        $(function () {
+            $.ajax({
+                url:"findAllPost.do",
+                method:"get",
+                success:function (data) {
+                    var str="";
+                    jsonObj= JSON.parse(data);
+                    $.each(jsonObj,function (index,row,rs) {
+                        str+="<option value='"+row.id+"'>"+row.post_name+"</option>";
+                    });
+                    $("#post").html(str);
+                },
+                error:function () {
+
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container" style="width: 50%;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-info">
+                雇员查询系统
+            </h3>
+        </div>
+        <div class="panel-body">
+            雇员姓名
+            <input class="form-control" name="name" id="name" placeholder="请输入姓名"><br>
+            雇员职位
+            <select id="post" name="post" class="form-control" onchange="javascript:post()">
+                <option value="">请选择</option>
+            </select>
+            <br>
+            <div align="right">
+                <a href="javascript:redirectShowResult()" class="btn btn-warning">查询雇员明细</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
